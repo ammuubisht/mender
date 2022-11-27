@@ -1,0 +1,86 @@
+{% extends 'main.html'%} {%load static%} {%block content%}
+
+<div class="searched-movie">
+  <div class="custom-gradient">
+    <img src="{{backdrop}}" height="600px" class="backdrop" />
+    <img src="{{main_poster}}" width="300" height="450" class="main-poster" />
+    <div class="details">
+      <h1 id="main-movie">{{query | title}}</h1>
+      <p class="overview">{{overview}}</p>
+      <p class="overview">
+        <span style="font-weight: 500">Genres:</span> {{genres}}
+      </p>
+      <p class="overview">
+        <span style="font-weight: 500">Rating:</span>&#11088;{{rating}}/10
+      </p>
+      <p class="overview">
+        <span style="font-weight: 500">Release Date:</span> {{release_date}}
+      </p>
+      <button id="see-on-google" onclick="searchGoogle()">
+        See Cast on Google ↗
+      </button>
+      <button id="see-on-google" onclick="">
+        <span style="content: '\002B'">&plus;</span> Add To My List
+      </button>
+      <div class="stream-flex">
+        {%for platform, logo in watch_providers%}
+        <p>Stream on:</p>
+        <img src="{{logo}}" class="platform-icon" />
+        
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="trailer-div">
+  <h1 style="text-align: center">Watch Trailer</h1>
+  <iframe
+    height="515"
+    src="https://www.youtube.com/embed/{{trailer_key}}"
+    class="iframe-trailer"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<div class="second-hero">
+  <h1 class="recom-heading">Movies You Might Like</h1>
+  <div class="results">
+    <!-- <h2 id="name" class="text-uppercase">results will be here</h2> -->
+
+    {% for movie, poster in combined%}
+    <!-- <div class="movie-card"> -->
+    <!-- <a href="{% url 'movie' %}"> -->
+    <img
+      src="{{poster}}"
+      width="200px"
+      height="300px"
+      class="rec-movie-poster"
+      onclick="recommend('{{movie}}')"
+    />
+    <!-- </a> -->
+
+    <!-- <h4 class="rec-movie-title">{{movie | title}}</h4> -->
+    <!-- </div> -->
+    {%endfor%}
+  </div>
+</div>
+<!-- <div class="loader-wrapper">
+  <span class="loader"><span class="loader-inner"></span></span>
+</div> -->
+
+<script>
+  function searchGoogle() {
+    let movie_name = document.getElementById("main-movie").innerHTML;
+    window.open(`https://www.google.com/search?q=cast+of+${movie_name}`);
+  }
+
+  function recommend(movie) {
+    document.getElementById('autoComplete').value = movie;
+    document.getElementById('search-btn').form.submit();
+  }
+</script>
+{% endblock content%}

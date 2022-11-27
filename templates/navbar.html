@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar</title>
+  </head>
+  <body>
+    <nav>
+      <div class="logo-div">
+        <a href="/" class="logo">Mender</a>
+      </div>
+      <div class="nav-mid-container">
+        <ul class="nav-mid-container-list">
+          <li><a href='/'>Home</a></li>
+          <!-- <li><a href='#'>Movies</a></li> -->
+          <li><a href="{% url 'shows'%}"">Web Series</a></li>
+
+          <!-- <li><a href='#'>Upcoming</a></li> -->
+        </ul>
+      </div>
+
+      <div class="about-top-div">
+        <form action="{% url 'movie'%}" method="get">
+          <div class="form-group shadow-textarea">
+            <!-- <div class="search-box-div"> -->
+            <input
+              type="text"
+              name="movie"
+              class="search-bar form-control"
+              id="autoComplete"
+              autocomplete="off"
+              placeholder="Avatar, Spider Man..."
+              required="required"
+              autofocus
+            />
+            <i class="fa fa-search blackcol fa-sm" aria-hidden="true"></i>
+            <button id="search-btn" onclick="mySearchFunction()">SEARCH</button>
+            <!-- </div> -->
+
+            <div id="box"></div>
+          </div>
+        </form>
+      </div>
+      <div class="nav-right-div">
+        <i class="fa-solid fa-ellipsis-vertical fa-lg"></i>
+      </div>
+    </nav>
+
+    <script>
+      const data = "{{movies_names}}";
+      const rdata = JSON.parse(data.replace(/&quot;/g, '"'));
+      console.log(rdata);
+      const input = document.getElementById("autoComplete");
+      console.log(input);
+      var filteredMovies = [];
+
+      input.addEventListener("keyup", (e) => {
+        document.getElementById("box").style.display = "block";
+        document.getElementById("box").style.opacity = "0.9";
+        box.innerHTML = "";
+        filteredMovies = rdata.filter((info) => info.includes(e.target.value));
+        if (filteredMovies.length > 0) {
+          filteredMovies.slice(0, 10).map((movie) => {
+            box.innerHTML += `<span class="search-results">${movie}</span><br>`;
+          });
+        } else {
+          box.innerHTML = "No Movie Found";
+        }
+
+        let searchList = box.querySelectorAll("span");
+        for (let i = 0; i < searchList.length; i++) {
+          searchList[i].setAttribute("onclick", "select(this)");
+        }
+
+        if (e.target.value.length === 0) {
+          box.innerHTML = "";
+
+          document.getElementById("box").style.display = "none";
+          document.getElementById("box").style.opacity = "0";
+        }
+      });
+
+      function select(element) {
+        let selectData = element.textContent;
+        let searchBox = document.getElementById("autoComplete");
+        searchBox.value = selectData;
+        searchBox.style.textTransform = "capitalize";
+        document.getElementById("box").style.display = "none";
+
+        // icon.onclick = ()=>{
+        //     webLink = `https://www.google.com/search?q=${selectData}`;
+        //     linkTag.setAttribute("href", webLink);
+        //     linkTag.click();
+        // }
+        // searchWrapper.classList.remove("active");
+      }
+    </script>
+  </body>
+</html>

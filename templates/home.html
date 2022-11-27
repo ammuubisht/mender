@@ -1,0 +1,53 @@
+{% extends 'main.html'%} {% block content %}
+
+<section class="backdrop-section">
+  <!-- Full-width images with number and caption text -->
+  <h1 class="search-tagline">Search for any movie to get the recommendations</h1>
+
+  {% for backdrop, title, overview, rating, release_date in carousel_movies %}
+
+  <div class="mySlides fade">
+    <img src="{{backdrop}}" height="600" class="home-backdrop" />
+    <div class="text">{{title}}</div>
+    <div class="hover-info-carousel">
+      <h1 class="hover-title">{{title}}</h2>
+      <p>{{overview}}</p>
+      <p><span style="font-weight: 600;background-color: transparent;">Rating: </span>{{rating}}/10</p>
+      <p><span style="font-weight: 600;background-color: transparent;">Release Date: </span>{{release_date}}</p>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+<br />
+
+<div class="second-hero">
+  <h1 class="recom-heading">Explore Popular Movies</h1>
+  <div class="results">
+    {% for poster in posters%}
+    <a href="{% url 'movie'%}">
+      <img src="{{poster}}" height="300px" class="rec-movie-poster" />
+    </a>
+    {%endfor%}
+  </div>
+</div>
+
+
+<script>
+  let slideIndex = 0;
+  showSlides();
+  
+  function showSlides() {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {
+      slideIndex = 1;
+    }
+    slides[slideIndex - 1].style.display = "flex";
+    setTimeout(showSlides, 5000); // Change image every 5 seconds
+  }
+</script>
+{%endblock content%}
