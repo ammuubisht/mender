@@ -1,7 +1,7 @@
 # Mender
 Mender is a movie recommendation website which uses cosine similarity algorithm to give the most similar movies to the user based on his search. The Backend is based on Django Framework. The user can search from over 1000+ movies and get recommendations for what to watch next!
 
-Trailer for a particular movie is also provided on the search results page, that is fetched from youtube.
+Trailer for a particular movie is also provided on the search results page, that is fetched from youtube. Used TMDB API to fetch the movie informations like cast, reviews and genres etc. 
 
 ## Screenshots of User Interface
 
